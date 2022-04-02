@@ -1,2 +1,126 @@
-ユーザー名@コンテナID:ディレクトリ#
-root@28bb0f804a21:/data#
+【コマンド】
+Dockerがあることを確認する（事前にDocker Desktopを起動させておく）
+[mac] $ docker --version
+
+---------------------------------------
+    Git関連のコマンド
+---------------------------------------
+Gitのバージョンを確認
+$ git --version
+
+Gitの設定を確認
+$ git config -l
+
+Gitのユーザー名を設定
+$ git config --global user.name "ユーザー名"
+
+Gitのメールアドレスを設定
+$ git config --global user.email "メールアドレス"
+
+Gitの設定（ユーザー名、メールアドレス）を確認
+$ git config --list | grep user
+
+Gitの初期化
+$ git init
+
+Gitのコミット(一連)
+[mac] $ git status
+[mac] $ git add .
+[mac] $ git status
+[mac] $ git commit -m "メッセージ"
+
+リモートリポジトリへのプッシュ
+$ git push
+
+---------------------------------------
+    Github SSH接続設定関連のコマンド
+---------------------------------------
+Github用の鍵を用意する
+$ ssh-keygen -t ed25519 -N "" -f ~/.ssh/github
+
+クリップボードに公開鍵をコピー
+$ pbcopy < ~/.ssh/github.pub
+
+GitHubの公開鍵の設定画面を開く（https://github.com/settings/keys）
+・New SSH keyをクリック
+・Title を適当に入力する(PC名を入れておくと鍵管理しやすい)
+・Key にクリップボードにコピーした公開鍵を貼り付ける
+・Add SSH Key で鍵を登録する
+
+~/.ssh/config へ追記
+$ vi ~/.ssh/config
+・Host github.com
+  IdentityFile ~/.ssh/github
+  User git
+
+GithubへSSH接続する
+$ ssh -T github.com
+（Hi xxx! You've successfully authenticated, but GitHub does not provide shell access.が出たら成功）
+
+---------------------------------------
+    Docker関連のコマンド
+---------------------------------------
+作業ディレクトリを作成（）
+[mac] $ mkdir プロジェクト名
+[mac] $ cd プロジェクト名
+
+docker-compose.yml を作成する
+$ touch docker-compose.yml
+
+Dockerのイメージファイルを作成
+[mac] $ docker compose build
+
+DockerイメージカラDockerコンテナを作成（いわゆるサーバー起動）
+[mac] $ docker compose up -d
+
+Dockerコンテナ一覧表示
+[mac] $ docker compose ps
+
+Dockerのアプリケーションコンテナ（PHP）に移行する
+[mac] $ docker compose exec app bash
+
+DockerのWebサーバーコンテナ（Nginx）のバージョンを確認する
+[mac] $ docker compose exec web nginx -v
+
+Dockerのデータベースコンテナ（MySQL）のバージョンを確認する
+[mac] $ docker compose exec db mysql -V
+
+コンテナを破棄する（docker-compose.yml を変更する場合、一度コンテナを破棄する。）
+[mac] $ docker compose down
+
+---------------------------------------
+    アプリケーションコンテナ（PHP）関連のコマンド
+---------------------------------------
+PHPのバージョン確認
+[app] $ php -v
+
+Composerのバージョン確認
+[app] $ composer -V
+
+Laravelをインストール
+[app] $ composer create-project --prefer-dist "laravel/laravel=9.*" .
+
+
+[app] $ chmod -R 777 storage bootstrap/cache
+
+Artisanのバージョンを確認
+[app] $ php artisan -V
+
+マイグレーション
+[app] $ php artisan migrate
+
+コンテナの外に出る
+[app] $ exit
+
+
+
+
+
+
+
+
+
+
+
+
+；
