@@ -12,6 +12,14 @@ class NotesController extends Controller
         return view('notes.index');
     }
 
+    // 個人ノートの検索処理
+    public function search(Request $request){
+
+        // タイトルが検索ワードと一致するメモを全て取得する
+        $item = Note::where('title',$request->input)->first();
+        return view('notes.find', ['item' => $item, 'input' => $request->input]);
+    }
+
     // 個人ノートの表示画面
     public function mynote(Request $request){
         // ユーザー情報を取得

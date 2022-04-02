@@ -12,15 +12,17 @@
     このページでは、自分のメモのCRUD処理が可能です。</p>
 
     <div class="row my-3">
-        <a class="btn btn-primary" href="/notes/mynote/add">自分のメモを追加する</a>
+        <div class="col-md-6">
+            <a class="btn btn-primary" href="/notes/mynote/add">自分のメモを追加する</a>
+        </div>
 
-        <form action="/notes/mynote" method="post">
-            @csrf
-            <label for="">自分のメモを検索：</label>
-            <input type="text" name="" value="">
-            <input class="btn btn-secondary" type="submit" name="" value="検索">
-
-        </form>
+        <div class="col-md-6">
+            <form class="form" action="/notes/mynote" method="post">
+                @csrf
+                <input class="form-controll" type="text" name="input" value="">
+                <input class="btn btn-secondary" type="submit" name="" value="自分のメモを検索">
+            </form>
+        </div>
 
     </div>
 
