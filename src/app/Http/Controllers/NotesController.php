@@ -27,24 +27,46 @@ class NotesController extends Controller
     }
     // 個人ノートのメモ追加処理
     public function create(Request $request){
+        // バリデーションの実行（Noteモデルのルールに従う）
+        $this->validate($request, Note::$rules);
+
+        // 保存作業
+        $note = new Note;
+        $form = $request->all(); // リクエストした情報を使用する
+        unset($form['_token']); // フォームに追加される非表示フィールド「_token」は削除しておく
+        $note->fill($form)->save(); // インスタンスに値を設定して保存
+        return redirect('/notes/mynote');
 
     }
 
     // 個人ノートのメモ編集画面
     public function edit(Request $request){
-        return view('notes.edit');
+        $note = Note::find($request->id); // edit?id= で入力された値と合致するレコードを取得する
+        return view('notes.edit', ['note' => $note]);
     }
     // 個人ノートのメモ編集処理
     public function update(Request $request){
+        // バリデーションの実行
+        $this->validate($request, Note::$rules);
+        // 保存作業
+        $note = Note::find($request->id); // POSTされたidと合致するレコードを取得する
+
+        // 値を用意する
+        $form = $request->all(); // リクエストした情報を使用する
+        unset($form['_token']); // フォームに追加される非表示フィールド「_token」は削除しておく
+        $note->fill($form)->save();
+        return redirect('/notes/mynote');
 
     }
 
     // 個人ノートのメモ削除確認画面
     public function delete(Request $request){
-        return view('notes.delete');
+        $note = Note::find($request->id);
+        return view('notes.delete',['note' => $note]);
     }
     // 個人ノートのメモ削除処理
     public function remove(Request $request){
-
+        Note::find($request->id)->delete();
+        return redirect('/notes/mynote');
     }
 }
