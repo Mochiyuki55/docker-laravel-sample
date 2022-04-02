@@ -113,6 +113,21 @@ Artisanのバージョンを確認
 [app] $ exit
 
 
+---------------------------------------
+    データベースコンテナ（MySQL）関連のコマンド
+---------------------------------------
+Dockerのデータベースコンテナ（MySQL）に移行する
+[mac] $ docker compose exec db bash
+
+MySQLにログインする
+[db] $ mysql -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE
+
+データベースをみる
+[mysql] > show databases;
+
+Larabel データベースのテーブルをみる
+[mysql] > show tables;
+
 
 
 

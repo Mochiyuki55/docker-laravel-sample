@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Note; // notesテーブルをモデル化した、Noteモデルを使う
+use Illuminate\Support\Facades\Auth;
 
 class NotesController extends Controller
 {
@@ -12,7 +14,11 @@ class NotesController extends Controller
 
     // 個人ノートの表示画面
     public function mynote(Request $request){
-        return view('notes.mynote');
+        // ユーザー情報を取得
+        $user = Auth::user();
+        // ユーザーのIDと一致するメモを取得する
+        $items = Note::where('user_id', $user->id)->get();
+        return view('notes.mynote', ['items' => $items, 'user' => $user]);
     }
 
     // 個人ノートのメモ追加画面
